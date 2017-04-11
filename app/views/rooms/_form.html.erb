@@ -4,6 +4,16 @@
       <h1><%= @room.new_record? ? "Publicar": "Editar" %> Habitación</h1>
 
       <%= form_for @room do |f| %>
+            <% if @room.errors.any? %>
+            <div id="errorExplanation "class="">
+              <h2><%= pluralize(@room.errors.count, "error") %> prohibited this register from being saved: </h2>
+              <ul>
+                <% @room.errors.full_messages.each do |msg| %>
+                 <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
         <div class="form-group">
           <%= f.text_field :title, class: 'form-control input-lg', placeholder: "Título" %>
         </div>
