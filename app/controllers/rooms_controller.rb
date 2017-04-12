@@ -18,26 +18,25 @@ class RoomsController < ApplicationController
 
   def edit
     @room = Room.find(params[:id])
-    @title = @room.title
-    @description = @room.description
-    @beds =  @room.beds
-    @guests =  @room.guests
-    @image_url =  @room.image_url
   end
 
-def update
-  @title = params[:room][:title]
-  @description = params[:room][:description]
-  @beds = params[:room][:beds]
-  @guests = params[:room][:guests]
-  @image_url = params[:room][:image_url]
-  if @room.save
-    redirect_to rooms_path
-  else
-    render "edit"
+  def update
+    @room = Room.find(params[:id])
+      if @room.update(room_params)
+        redirect_to rooms_path
+      else
+        render 'edit'
+      end
   end
 
-end
+  def destroy
+    @room = Room.find(params[:id])
+    if @room.destroy
+        redirect_to rooms_path, :notice => "Room delete"
+    else
+        redirect_to rooms_path, :notice => "Room can't delete"
+    end
+  end
 
   protected
     def room_params
